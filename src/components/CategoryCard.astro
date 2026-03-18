@@ -1,0 +1,66 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  entryCount: number;
+  quote: string;
+  accentColor: string;
+  href?: string;
+}
+
+const { number, title, entryCount, quote, accentColor, href = '#' } = Astro.props;
+
+const colorMap: Record<string, string> = {
+  terracotta: 'bg-terracotta/10 text-terracotta border-terracotta/20',
+  'dusty-blue': 'bg-dusty-blue/10 text-dusty-blue border-dusty-blue/20',
+  sage: 'bg-sage/10 text-sage border-sage/20',
+  ochre: 'bg-ochre/10 text-ochre border-ochre/20',
+};
+const tagClasses = colorMap[accentColor] || colorMap.terracotta;
+---
+
+<a
+  href={href}
+  class="group block border border-border rounded-sm p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 bg-cream"
+>
+  <!-- Category number + tag -->
+  <div class="flex items-center justify-between mb-4">
+    <span class="font-sans text-xs tracking-[0.2em] uppercase text-ink/30">
+      No. {number}
+    </span>
+    <span class={`text-xs tracking-wider uppercase px-2 py-0.5 rounded-full border ${tagClasses}`}>
+      {entryCount} {entryCount === 1 ? 'entry' : 'entries'}
+    </span>
+  </div>
+
+  <!-- Title -->
+  <h2 class="font-serif text-2xl font-medium mb-3 text-ink group-hover:text-terracotta transition-colors">
+    {title}
+  </h2>
+
+  <!-- Quote -->
+  <p class="font-serif italic text-sm text-ink/50 leading-relaxed mb-6">
+    &ldquo;{quote}&rdquo;
+  </p>
+
+  <!-- Thumbnail grid placeholder -->
+  <div class="grid grid-cols-4 gap-1.5 mb-6">
+    {[...Array(4)].map(() => (
+      <div class="aspect-square rounded-sm bg-placeholder"></div>
+    ))}
+  </div>
+
+  <!-- CTA -->
+  <div class="flex items-center gap-2 text-sm text-ink/40 group-hover:text-terracotta transition-colors">
+    <span class="tracking-wide">View Collection</span>
+    <svg
+      class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="1.5"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+    </svg>
+  </div>
+</a>

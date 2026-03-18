@@ -1,0 +1,33 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border mt-24">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Left: Index links -->
+      <div>
+        <h3 class="font-serif text-sm font-medium tracking-wide uppercase text-ink/40 mb-4">Index</h3>
+        <div class="flex flex-col gap-2">
+          <a href="/" class="text-sm text-ink/60 hover:text-ink transition-colors">Browse</a>
+          <a href="/archive" class="text-sm text-ink/60 hover:text-ink transition-colors">Archive</a>
+        </div>
+      </div>
+
+      <!-- Right: About -->
+      <div>
+        <h3 class="font-serif text-sm font-medium tracking-wide uppercase text-ink/40 mb-4">About</h3>
+        <p class="text-sm text-ink/50 max-w-sm leading-relaxed">
+          A field guide to the beautifully botched — documenting design quirks,
+          ad-hoc engineering, and charming oddities found in everyday life.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-10 pt-6 border-t border-border">
+      <p class="text-xs text-ink/30">
+        &copy; {year} Beautiful Imperfections. All observations are made with affection.
+      </p>
+    </div>
+  </div>
+</footer>
