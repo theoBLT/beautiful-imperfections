@@ -4,19 +4,16 @@
 
 ```
 src/content/concepts/
-├── _template/          ← copy this to start a new concept
-│   ├── index.md
-│   └── photos/
-├── plastification/     ← example concept
-│   ├── index.md        ← frontmatter + prose
-│   └── photos/
-│       ├── remote-control.jpg
-│       ├── sofa-wrap.jpg
-│       └── menu-sealed.jpg
+├── _template/              ← copy this to start a new concept
+│   └── index.md
+├── plastification/         ← example concept
+│   ├── index.md            ← frontmatter + prose
+│   ├── remote-control.jpg
+│   ├── sofa-wrap.jpg
+│   └── menu-sealed.jpg
 └── wishful-thinking/
     ├── index.md
-    └── photos/
-        └── ...
+    └── ...
 ```
 
 ## Steps
@@ -26,7 +23,7 @@ src/content/concepts/
    cp -r src/content/concepts/_template src/content/concepts/my-concept
    ```
 
-2. **Drop photos** into `my-concept/photos/`. Any format (jpg, png, webp). Astro optimizes at build time.
+2. **Drop photos** into `my-concept/` alongside `index.md`. Any format (jpg, png, webp). Astro optimizes at build time.
 
 3. **Edit `index.md`** — fill in the frontmatter and write the prose:
    - `name`: Display name (e.g., "Plastification")
@@ -38,9 +35,18 @@ src/content/concepts/
 
 4. **Commit and push.** The site rebuilds automatically.
 
-## Obsidian Tips
+## Obsidian Setup
 
-- Open `src/content/concepts/` as your Obsidian vault root (or a subfolder of a larger vault)
+Set these once in **Settings > Files & Links**:
+
+- **Default location for new attachments** → "Same folder as current file"
+- **Use `[[Wikilinks]]`** → OFF (so Obsidian writes standard `![](path)` markdown images)
+
+With these settings, pasting an image into a concept's `index.md` automatically places the file in the same folder — no manual moving needed.
+
+### Other tips
+
+- Open `src/content/concepts/` as your Obsidian vault root
 - Photos render as previews in Obsidian when using relative paths
 - The `---` frontmatter block is native YAML — Obsidian handles it natively
 - Use the `_template/` folder as a starting point for each new entry

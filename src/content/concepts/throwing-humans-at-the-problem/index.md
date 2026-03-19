@@ -5,7 +5,7 @@ category: "culture"
 date: 2026-03-18
 location: "Jakarta, Indonesia"
 photos:
-  - src: "./photos/supermarket-fruit-attendant.jpeg"
+  - src: "./supermarket-fruit-attendant.jpeg"
     caption: "March 18, 2026, South Jakarta. An employee's sole job is to stand by the fruit stalls of a high-end supermarket."
     featured: true
 ---

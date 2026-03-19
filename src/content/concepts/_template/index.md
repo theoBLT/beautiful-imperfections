@@ -5,10 +5,10 @@ category: "objects"
 date: 2026-03-19
 location: "Jakarta, Indonesia"
 photos:
-  - src: "./photos/example.jpg"
+  - src: "./example.jpg"
     caption: "What we're looking at and why it matters"
     featured: true
-  - src: "./photos/another.jpg"
+  - src: "./another.jpg"
     caption: "Optional caption"
 ---
 

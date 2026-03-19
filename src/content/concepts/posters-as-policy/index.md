@@ -5,12 +5,12 @@ category: "civic"
 date: 2026-03-18
 location: "Jakarta, Indonesia"
 photos:
-  - src: "./photos/mall-thrifting-banner.jpeg"
+  - src: "./mall-thrifting-banner.jpeg"
     caption: "South Jakarta, April 16, 2026. Mall tenants are instructed not to engage in thrifting practices / selling imported secondhand clothing."
     featured: true
-  - src: "./photos/escalator-safety-poster.jpeg"
+  - src: "./escalator-safety-poster.jpeg"
     caption: "March 18, 2026. A note stating 'Pay attention while going up the escalator' stands on its own standalone poster holder by the MRT's escalator."
-  - src: "./photos/anti-drug-led-screen.jpeg"
+  - src: "./anti-drug-led-screen.jpeg"
     caption: "March 16, 2026. Prime advertising real-estate in central Jakarta's SCBD. A large LED screen is used to tell people not to do or engage in drugs."
 ---
 

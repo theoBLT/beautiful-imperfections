@@ -5,12 +5,12 @@ category: "culture"
 date: 2026-03-18
 location: "Jakarta, Indonesia"
 photos:
-  - src: "./photos/luxury-development-ad.png"
+  - src: "./luxury-development-ad.png"
     caption: "March 15, 2026, south Jakarta. An unambiguously elitist ad for a luxury residential development, featuring a Western grandma who never lived there, and never will."
     featured: true
-  - src: "./photos/waterpark-ad-blond-boy.jpeg"
+  - src: "./waterpark-ad-blond-boy.jpeg"
     caption: "March 18, 2026, South Jakarta. At a local mall not targeted at expats, the local waterpark chose to feature a young blond boy in their advertisement."
-  - src: "./photos/mineral-water-ad-transport.jpeg"
+  - src: "./mineral-water-ad-transport.jpeg"
     caption: "March 17, 2026. All over Jakarta's public transport, the whitest picture of the fairer Indonesians you'll ever meet are singing the praises of a mineral water brand."
 ---
 

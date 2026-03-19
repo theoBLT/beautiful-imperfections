@@ -5,7 +5,7 @@ category: "culture"
 date: 2021-12-01
 location: "Jakarta, Indonesia"
 photos:
-  - src: "./photos/staff-temperature-display.png"
+  - src: "./staff-temperature-display.png"
     caption: "December 2021, Kenangan Heritage, a luxury chain in Jakarta. The name and body temperature of staff is on display, for everyone to see."
     featured: true
 ---

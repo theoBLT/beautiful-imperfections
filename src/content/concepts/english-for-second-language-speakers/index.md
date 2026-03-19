@@ -5,10 +5,10 @@ category: "typography"
 date: 2021-12-01
 location: "Jakarta, Indonesia"
 photos:
-  - src: "./photos/stay-delightful-mall-poster.jpeg"
+  - src: "./stay-delightful-mall-poster.jpeg"
     caption: "December 2021, Pondok Indah Mall, Jakarta. A poster encourages shoppers to 'stay delightful' at the mall, with their disinfecting handrails."
     featured: true
-  - src: "./photos/thankyou-restaurant-sign.png"
+  - src: "./thankyou-restaurant-sign.png"
     caption: "December 2022, Plaza Senayan, Jakarta. An upscale Indonesian eatery says 'Thankyou' to patrons for their patience, and goes on to state an incomprehensible thing about capacity limitation requiring staff to come pick you up."
 ---
 
