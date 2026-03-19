@@ -61,3 +61,153 @@ body::before {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--color-ochre);
 }
+
+/* ═══ Annotation markers ═══ */
+
+.annotation-marker {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--color-terracotta);
+  background: var(--color-cream);
+  color: var(--color-terracotta);
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  ring: 3px solid var(--color-cream);
+}
+
+.annotation-marker:hover,
+.marker-active {
+  background: var(--color-terracotta);
+  color: var(--color-cream);
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 4px 12px rgba(201, 122, 126, 0.35);
+}
+
+/* Smaller markers for mobile hero */
+.annotation-marker-sm {
+  width: 22px;
+  height: 22px;
+  font-size: 0.65rem;
+}
+
+/* ═══ Lightbox ═══ */
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(45, 45, 42, 0.95);
+  backdrop-filter: blur(4px);
+}
+
+/* ═══ Concept article prose ═══ */
+
+.concept-prose {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: color-mix(in srgb, var(--color-ink) 85%, transparent);
+}
+
+.concept-prose > p:first-of-type::first-letter {
+  font-family: var(--font-serif);
+  float: left;
+  font-size: 3.25em;
+  line-height: 0.8;
+  padding-right: 0.08em;
+  padding-top: 0.05em;
+  color: var(--color-terracotta);
+  font-weight: 500;
+}
+
+.concept-prose p {
+  margin-bottom: 1.25em;
+}
+
+.concept-prose h2 {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-ink) 40%, transparent);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.concept-prose ol {
+  list-style: none;
+  padding: 0;
+  counter-reset: observation;
+}
+
+.concept-prose ol > li {
+  counter-increment: observation;
+  position: relative;
+  padding-left: 2.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.concept-prose ol > li:last-child {
+  border-bottom: none;
+}
+
+.concept-prose ol > li::before {
+  content: counter(observation);
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-terracotta);
+  color: var(--color-terracotta);
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.concept-prose ol > li strong {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+}
+
+.concept-prose blockquote {
+  border-left: 3px solid var(--color-border);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: color-mix(in srgb, var(--color-ink) 60%, transparent);
+}
+
+.concept-prose em {
+  color: var(--color-ink);
+}
+
+.concept-prose a {
+  color: var(--color-terracotta);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Mobile detail crop (injected by JS) */
+.mobile-detail-crop {
+  margin-left: -2.5rem;
+}

@@ -1,0 +1,255 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnnotatedImage from '../../components/AnnotatedImage.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+
+export async function getStaticPaths() {
+  const concepts = await getCollection('concepts');
+  return concepts
+    .filter(entry => !entry.id.startsWith('_'))
+    .map(entry => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { name, tagline, hero, annotations, photos, category, date, location } = entry.data;
+
+const hasAnalysis = !!hero && !!annotations?.length;
+const hasGallery = !!photos?.length;
+
+// Find the featured photo for the card/og image
+const featuredPhoto = photos?.find(p => p.featured) || photos?.[0];
+
+// Format date
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+
+<BaseLayout title={`${name} — Beautiful Imperfections`} description={tagline}>
+  {/* Back navigation */}
+  <div class="max-w-6xl mx-auto px-6 pt-6">
+    <a
+      href="/"
+      class="inline-flex items-center gap-2 text-xs font-sans tracking-wide text-ink/40 hover:text-ink transition-colors"
+    >
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+      </svg>
+      Index
+      {category && (
+        <>
+          <span class="text-ink/20">/</span>
+          <span class="uppercase tracking-[0.15em]">{category}</span>
+        </>
+      )}
+    </a>
+  </div>
+
+  {hasAnalysis ? (
+    /* ═══════════════════════════════════════════
+       ANNOTATED ANALYSIS LAYOUT (split panel)
+       ═══════════════════════════════════════════ */
+    <>
+      {/* Mobile: hero image at top */}
+      <div class="lg:hidden px-6 mt-6">
+        <div class="relative overflow-hidden rounded-sm border border-border bg-placeholder">
+          <img
+            src={hero!.src}
+            alt={hero!.caption || name}
+            class="w-full h-auto"
+            loading="eager"
+          />
+          {/* Small markers on mobile hero */}
+          {annotations!.map(ann => (
+            <a
+              href={`#observation-${ann.id}`}
+              class="annotation-marker annotation-marker-sm absolute z-20 transform -translate-x-1/2 -translate-y-1/2 no-underline"
+              style={`left: ${ann.x}%; top: ${ann.y}%;`}
+            >
+              {ann.id}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Split panel */}
+      <div class="max-w-7xl mx-auto px-6 mt-8 lg:mt-10">
+        <div class="lg:grid lg:grid-cols-[55%_45%] lg:gap-10 items-start">
+          {/* Left: Sticky annotated image (desktop only) */}
+          <div class="hidden lg:block sticky top-20 self-start">
+            <AnnotatedImage
+              src={hero!.src}
+              caption={hero!.caption}
+              illustration={hero!.illustration}
+              annotations={annotations!}
+            />
+          </div>
+
+          {/* Right: Scrollable content */}
+          <div class="mt-8 lg:mt-0">
+            {/* Title block */}
+            <header class="mb-10">
+              <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight text-ink mb-4">
+                {name}
+              </h1>
+              <p class="font-serif italic text-base text-ink/50 leading-relaxed border-l-2 border-border pl-4 mb-4">
+                {tagline}
+              </p>
+              <div class="flex items-center gap-3 text-xs font-sans text-ink/30">
+                {category && (
+                  <span class="uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border border-border text-ink/40">
+                    {category}
+                  </span>
+                )}
+                {location && <span>{location}</span>}
+                <span>{formattedDate}</span>
+              </div>
+            </header>
+
+            {/* Body content with mobile detail crops interleaved */}
+            <div class="concept-prose" data-concept-content>
+              <Content />
+            </div>
+
+            {/* Mobile detail crops — injected via script after observations */}
+          </div>
+        </div>
+      </div>
+
+      {/* Gallery (full width, below split panel) */}
+      {hasGallery && (
+        <div class="max-w-6xl mx-auto px-6">
+          <PhotoGallery photos={photos!} heroSrc={hero!.src} />
+        </div>
+      )}
+    </>
+  ) : (
+    /* ═══════════════════════════════════════════
+       STANDARD ARTICLE LAYOUT (single column)
+       ═══════════════════════════════════════════ */
+    <article class="max-w-3xl mx-auto px-6 mt-10 lg:mt-16">
+      {/* Title block */}
+      <header class="mb-10">
+        <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight text-ink mb-4">
+          {name}
+        </h1>
+        <p class="font-serif italic text-lg text-ink/50 leading-relaxed border-l-2 border-border pl-4 mb-4">
+          {tagline}
+        </p>
+        <div class="flex items-center gap-3 text-xs font-sans text-ink/30">
+          {category && (
+            <span class="uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border border-border text-ink/40">
+              {category}
+            </span>
+          )}
+          {location && <span>{location}</span>}
+          <span>{formattedDate}</span>
+        </div>
+      </header>
+
+      {/* Featured image */}
+      {featuredPhoto && (
+        <figure class="mb-10">
+          <div class="overflow-hidden rounded-sm border border-border bg-placeholder">
+            <img
+              src={featuredPhoto.src}
+              alt={featuredPhoto.caption || name}
+              class="w-full h-auto"
+              loading="eager"
+            />
+          </div>
+          {featuredPhoto.caption && (
+            <figcaption class="mt-2 text-xs text-ink/40 font-sans leading-relaxed">
+              {featuredPhoto.caption}
+            </figcaption>
+          )}
+        </figure>
+      )}
+
+      {/* Body content */}
+      <div class="concept-prose">
+        <Content />
+      </div>
+
+      {/* Photo gallery */}
+      {hasGallery && (
+        <PhotoGallery photos={photos!} heroSrc={featuredPhoto?.src} />
+      )}
+    </article>
+  )}
+</BaseLayout>
+
+<script>
+  // Scroll-active sync for annotation markers (desktop only)
+  if (window.innerWidth >= 1024) {
+    const markers = document.querySelectorAll('[data-marker]');
+    if (markers.length > 0) {
+      // Find observation list items in the rendered content
+      const content = document.querySelector('[data-concept-content]');
+      const listItems = content?.querySelectorAll('ol > li') || [];
+
+      listItems.forEach((li, index) => {
+        li.setAttribute('data-observation', String(index + 1));
+        li.id = `observation-${index + 1}`;
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = (entry.target as HTMLElement).dataset.observation;
+              markers.forEach(m => m.classList.remove('marker-active'));
+              document.querySelector(`[data-marker="${id}"]`)?.classList.add('marker-active');
+            }
+          });
+        },
+        { rootMargin: '-20% 0px -60% 0px' }
+      );
+
+      listItems.forEach(li => observer.observe(li));
+    }
+  }
+
+  // Mobile detail crops: inject cropped views before each observation list item
+  if (window.innerWidth < 1024) {
+    const heroImg = document.querySelector('.lg\\:hidden img[loading="eager"]') as HTMLImageElement;
+    const content = document.querySelector('[data-concept-content]');
+    const listItems = content?.querySelectorAll('ol > li') || [];
+    const markers = document.querySelectorAll('.annotation-marker-sm');
+
+    if (heroImg && listItems.length > 0 && markers.length > 0) {
+      // Extract annotation positions from markers
+      const annotations: { x: number; y: number }[] = [];
+      markers.forEach(m => {
+        const style = (m as HTMLElement).style;
+        annotations.push({
+          x: parseFloat(style.left),
+          y: parseFloat(style.top),
+        });
+      });
+
+      listItems.forEach((li, index) => {
+        if (index >= annotations.length) return;
+        const ann = annotations[index];
+
+        const crop = document.createElement('div');
+        crop.className = 'mobile-detail-crop mb-3 mt-6 overflow-hidden rounded-sm border border-border';
+        crop.innerHTML = `<div class="aspect-[16/9] overflow-hidden bg-placeholder">
+          <img src="${heroImg.src}" alt="Detail ${index + 1}"
+            class="w-full h-full object-cover"
+            style="object-position: ${ann.x}% ${ann.y}%;"
+            loading="lazy" />
+        </div>`;
+
+        li.insertBefore(crop, li.firstChild);
+        li.id = `observation-${index + 1}`;
+      });
+    }
+  }
+</script>

@@ -1,0 +1,125 @@
+---
+interface Annotation {
+  id: number;
+  label: string;
+  x: number;
+  y: number;
+  summary?: string;
+}
+
+interface Props {
+  src: string;
+  caption?: string;
+  illustration?: string;
+  annotations: Annotation[];
+}
+
+const { src, caption, illustration, annotations } = Astro.props;
+const hasIllustration = !!illustration;
+---
+
+<div class="annotated-image relative" data-annotated-image>
+  {/* Image container */}
+  <div class="relative overflow-hidden rounded-sm border border-border bg-placeholder">
+    {/* Dot grid background behind image */}
+    <div class="absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(var(--color-ink) 1px, transparent 1px); background-size: 16px 16px;"></div>
+
+    {/* Photo */}
+    <img
+      src={src}
+      alt={caption || 'Concept reference image'}
+      class:list={[
+        'relative z-10 w-full h-auto max-h-[calc(100vh-8rem)] object-contain',
+        { 'hidden': hasIllustration }
+      ]}
+      data-image-photo
+      loading="eager"
+    />
+
+    {/* Illustration (if available, shown by default) */}
+    {hasIllustration && (
+      <img
+        src={illustration}
+        alt={caption || 'Concept illustration'}
+        class="relative z-10 w-full h-auto max-h-[calc(100vh-8rem)] object-contain"
+        data-image-illustration
+        loading="eager"
+      />
+    )}
+
+    {/* Annotation markers */}
+    {annotations.map(ann => (
+      <a
+        href={`#observation-${ann.id}`}
+        class="annotation-marker absolute z-20 transform -translate-x-1/2 -translate-y-1/2 no-underline"
+        style={`left: ${ann.x}%; top: ${ann.y}%;`}
+        data-marker={ann.id}
+        title={ann.label}
+      >
+        {ann.id}
+      </a>
+    ))}
+  </div>
+
+  {/* Photo/illustration toggle */}
+  {hasIllustration && (
+    <div class="flex justify-center mt-3">
+      <div class="inline-flex items-center bg-cream border border-border rounded-full text-xs overflow-hidden">
+        <button
+          class="px-3 py-1.5 font-sans tracking-wide text-ink/40 hover:text-ink transition-colors"
+          data-toggle="photo"
+        >
+          Photo
+        </button>
+        <button
+          class="px-3 py-1.5 font-sans tracking-wide text-ink bg-ink/5 border-l border-border"
+          data-toggle="illustration"
+        >
+          Illustration
+        </button>
+      </div>
+    </div>
+  )}
+
+  {/* Caption */}
+  {caption && (
+    <p class="mt-3 text-xs text-ink/40 font-sans text-center leading-relaxed">
+      {caption}
+    </p>
+  )}
+
+  {/* Reference label */}
+  <div class="absolute top-3 left-3 z-30 bg-cream/90 backdrop-blur-sm px-2.5 py-1 rounded-sm text-[10px] font-sans font-medium tracking-[0.15em] text-ink/40 uppercase border border-border">
+    Fig. 01 — Reference
+  </div>
+</div>
+
+<script>
+  // Photo/illustration toggle
+  document.querySelectorAll('[data-annotated-image]').forEach(container => {
+    const photo = container.querySelector('[data-image-photo]') as HTMLElement;
+    const illust = container.querySelector('[data-image-illustration]') as HTMLElement;
+    const toggles = container.querySelectorAll('[data-toggle]');
+
+    if (!photo || !illust || toggles.length === 0) return;
+
+    toggles.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = (btn as HTMLElement).dataset.toggle;
+        if (mode === 'photo') {
+          photo.classList.remove('hidden');
+          illust.classList.add('hidden');
+        } else {
+          photo.classList.add('hidden');
+          illust.classList.remove('hidden');
+        }
+        // Update active state
+        toggles.forEach(b => {
+          b.classList.toggle('text-ink', (b as HTMLElement).dataset.toggle === mode);
+          b.classList.toggle('bg-ink/5', (b as HTMLElement).dataset.toggle === mode);
+          b.classList.toggle('text-ink/40', (b as HTMLElement).dataset.toggle !== mode);
+        });
+      });
+    });
+  });
+</script>

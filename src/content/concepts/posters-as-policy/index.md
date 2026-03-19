@@ -4,9 +4,25 @@ tagline: "When the act of displaying a poster matters more than what it says"
 category: "civic"
 date: 2026-03-18
 location: "Jakarta, Indonesia"
+hero:
+  src: "./mall-thrifting-banner.jpeg"
+  caption: "South Jakarta, March 17, 2026. Mall tenants are instructed not to engage in thrifting practices / selling imported secondhand clothing."
+annotations:
+  - id: 1
+    label: "Official symbols"
+    x: 73
+    y: 55
+  - id: 2
+    label: "In-your-face typography"
+    x: 50
+    y: 67
+  - id: 3
+    label: "The small print becomes the big print"
+    x: 50
+    y: 82
 photos:
   - src: "./mall-thrifting-banner.jpeg"
-    caption: "South Jakarta, April 16, 2026. Mall tenants are instructed not to engage in thrifting practices / selling imported secondhand clothing."
+    caption: "South Jakarta, March 17, 2026. Mall tenants are instructed not to engage in thrifting practices / selling imported secondhand clothing."
     featured: true
   - src: "./escalator-safety-poster.jpeg"
     caption: "March 18, 2026. A note stating 'Pay attention while going up the escalator' stands on its own standalone poster holder by the MRT's escalator."
