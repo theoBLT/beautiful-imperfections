@@ -32,6 +32,7 @@ function contentImages() {
 
 // https://astro.build/config
 export default defineConfig({
+  trailingSlash: 'always',
   integrations: [contentImages()],
   vite: {
     plugins: [tailwindcss()]
